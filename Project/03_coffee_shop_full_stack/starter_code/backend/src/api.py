@@ -29,11 +29,7 @@ db_drop_and_create_all()
     returns status code 200 and json {"success": True, "drinks": drinks} where drinks is the list of drinks
         or appropriate status code indicating reason for failure
 '''
-@app.route("/test")
-def test():
-    auth_header = request.headers["Authorization"].split(" ")[1]
-    print(auth_header)
-    return "hello world"
+
 @app.route("/drinks", methods=["GET"])
 def get_drink():
     try:
@@ -53,8 +49,8 @@ def get_drink():
         or appropriate status code indicating reason for failure
 '''
 @app.route("/drinks-detail", methods=["GET"])
-@requires_auth("get:drinks-detail")
-def get_drink_detail(jwt):
+@requires_auth(permission="get:drinks-detail")
+def get_drink_detail(payload):
     try:
         drinks = Drink.query.all()
         return jsonify({
@@ -75,8 +71,8 @@ def get_drink_detail(jwt):
         or appropriate status code indicating reason for failure
 '''
 @app.route("/drinks", methods=["POST"])
-@requires_auth("post:drinks")
-def post_drink(jwt):
+@requires_auth(permission="post:drinks")
+def post_drink(payload):
     body = request.get_json()
     if not ('title' in body and 'recipe' in body):
         abort(422)
@@ -106,8 +102,8 @@ def post_drink(jwt):
         or appropriate status code indicating reason for failure
 '''
 @app.route("/drinks/<id>", methods=["PATCH"])
-@requires_auth("patch:drinks")
-def update_drink(jwt, id):
+@requires_auth(permission="patch:drinks")
+def update_drink(payload, id):
     body = request.get_json()
     try:
         drink = Drink.query.filter(Drink.id==id).one_or_none()
@@ -137,8 +133,8 @@ def update_drink(jwt, id):
         or appropriate status code indicating reason for failure
 '''
 @app.route("/drinks/id", methods=["DELETE"])
-@requires_auth("delete:drinks")
-def delete_drink(jwt, id):
+@requires_auth(permission="delete:drinks")
+def delete_drink(payload, id):
     try:
         drink = Drink.query.filter(Drink.id == id).one_or_none()
         if drink is None:
