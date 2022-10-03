@@ -4,11 +4,11 @@
 
 export const environment = {
   production: false,
-  apiServerUrl: 'http://127.0.0.1:5000', // the running FLASK api server url
+  apiServerUrl: 'http://127.0.0.1:5000',
   auth0: {
-    url: 'yetunde-coffee-shop.us.auth0.com', // the auth0 domain prefix
-    audience: 'coffeeshop', // the audience set for the auth0 app
-    clientId: 'trhD0sFBLJ4Yf5oTflIzQgnBUk6vswmY', // the client id generated for the auth0 app
-    callbackURL: 'http://localhost:8100', // the base url of the running ionic application. 
+    url: 'yetunde-coffee-shop.us.auth0.com',
+    audience: 'coffeeshop',
+    clientId: 'trhD0sFBLJ4Yf5oTflIzQgnBUk6vswmY',
+    callbackURL: 'http://localhost:8100', 
   }
 };
